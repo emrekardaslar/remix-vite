@@ -1,4 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
+import { StateProvider } from "../helper/stateManagement";
+import TestView from "~/view";
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,17 +10,11 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const handleClick = async () => {
-    // Dynamically import the function from the helper module
-    const { onClickFunction } = await import("../helper/helper");
-
-    // Call the imported function
-    onClickFunction();
-  };
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
-      <button onClick={handleClick}>Click Me</button>
+    <div>
+      <StateProvider initialState={{ count: 0 }}>
+        <TestView />
+      </StateProvider>
     </div>
   );
 }
